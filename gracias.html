@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Gracias por aceptar! 💝</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #ffd1ff, #a8edea);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .heart {
+            animation: pulse 1.5s infinite, float 3s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(5deg); }
+            50% { transform: scale(1.15) rotate(0deg); }
+            75% { transform: scale(1.1) rotate(-5deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        .dancing-font {
+            font-family: 'Dancing Script', cursive;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .heart-emoji {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0;
+            animation: fall linear forwards;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+                opacity: 1;
+            }
+        }
+        .message {
+            animation: fadeIn 1.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="p-4">
+    <div class="hearts" id="hearts"></div>
+    <div class="max-w-2xl mx-auto text-center bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl overflow-hidden border-2 border-pink-200 p-8">
+        <div class="message">
+            <div class="heart text-center mb-8">
+                <span class="text-pink-500 text-8xl">💝</span>
+            </div>
+            
+            <h1 class="dancing-font text-5xl font-bold text-pink-600 mb-6">¡Muchas gracias mi amor!</h1>
+            
+            <div class="space-y-6 text-gray-700 text-lg">
+                <p class="leading-relaxed">Sabía que dirías que sí, porque eres la persona más especial en mi vida. 💖</p>
+                
+                <div class="bg-pink-50 p-6 rounded-xl border border-pink-100">
+                    <p class="dancing-font text-2xl text-pink-600 mb-3">Prometo hacer de este San Valentín</p>
+                    <p class="text-xl">El mejor picnic de tu vida te amo mucho.</p>
+                </div>
+                
+                <p class="text-xl">Eres lo mejor que me ha pasado y cada día a tu lado es un regalo. Te amo con todo mi corazón. ❤️</p>
+                
+                <div class="mt-8 pt-6 border-t border-pink-100">
+                    <p class="text-sm text-gray-500">Con todo mi amor,<br>La persona que mas te ama de este planeta</p>
+                </div>
+            </div>
+            
+            <div class="mt-10">
+                <button onclick="createHeartsStorm()" class="bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold py-3 px-8 rounded-full hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+                    ¡Haz clic para más corazones! 💕
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Crear corazones flotantes
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            const emojis = ['💖', '💝', '💘', '💗', '💓', '💞', '💕'];
+            
+            const heart = document.createElement('div');
+            heart.className = 'heart-emoji';
+            heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 5 + 's';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            
+            heartsContainer.appendChild(heart);
+            
+            // Eliminar el corazón después de la animación
+            setTimeout(() => {
+                heart.remove();
+            }, 8000);
+        }
+        
+        // Tormenta de corazones
+        function createHeartsStorm() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(createHearts, i * 100);
+            }
+        }
+        
+        // Iniciar la lluvia de corazones suave
+        setInterval(createHearts, 500);
+        
+        // Efecto de confeti al cargar la página
+        function createConfetti() {
+            const colors = ['#ff0000', '#ff69b4', '#ff1493', '#ffc0cb', '#ff69b4'];
+            const container = document.createElement('div');
+            container.style.position = 'fixed';
+            container.style.top = '0';
+            container.style.left = '0';
+            container.style.width = '100%';
+            container.style.height = '100%';
+            container.style.pointerEvents = 'none';
+            container.style.zIndex = '1000';
+            
+            document.body.appendChild(container);
+            
+            for (let i = 0; i < 150; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'absolute';
+                    confetti.style.width = Math.random() * 15 + 5 + 'px';
+                    confetti.style.height = Math.random() * 15 + 5 + 'px';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.top = -20 + 'px';
+                    confetti.style.opacity = Math.random();
+                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    confetti.style.animation = `fall ${Math.random() * 3 + 2}s linear forwards`;
+                    
+                    container.appendChild(confetti);
+                    
+                    // Eliminar después de la animación
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 10000);
+                }, i * 30);
+            }
+            
+            setTimeout(() => {
+                container.remove();
+            }, 10000);
+        }
+        
+        // Lanzar confeti al cargar la página
+        window.addEventListener('load', () => {
+            createConfetti();
+            // Repetir el confeti cada 10 segundos
+            setInterval(createConfetti, 15000);
+        });
+    </script>
+</body>
+</html>

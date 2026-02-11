@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres ser mi San Valentín?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #ffd1ff, #a8edea);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .heart {
+            animation: pulse 1.5s infinite, float 3s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(5deg); }
+            50% { transform: scale(1.15) rotate(0deg); }
+            75% { transform: scale(1.1) rotate(-5deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        .dancing-font {
+            font-family: 'Dancing Script', cursive;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .heart-emoji {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0;
+            animation: fall linear forwards;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body class="p-4">
+    <div class="hearts" id="hearts"></div>
+    <div class="max-w-md mx-auto text-center bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl overflow-hidden border-2 border-pink-200">
+        <div class="p-8 relative">
+            <div class="absolute -top-4 -right-4 w-16 h-16 bg-pink-400 rounded-full opacity-20"></div>
+            <div class="absolute -bottom-4 -left-4 w-24 h-24 bg-purple-300 rounded-full opacity-20"></div>
+            
+            <div class="heart text-center mb-6 relative z-10">
+                <span class="text-red-500 text-7xl">💖</span>
+            </div>
+            <h1 class="dancing-font text-4xl font-bold text-pink-600 mb-4">¡Hola mi Chiquitilla!</h1>
+            <p class="text-gray-700 mb-8">Eres muy especial para mí y quiero que me des el honor de ser tu San Valentín, mi princesita 💕</p>
+            
+            <div class="space-y-4">
+                <p class="text-lg text-gray-800">¿Me harías el honor de ser mi San Valentín?</p>
+                
+                <div class="flex flex-col items-center space-y-4 mt-8">
+                <div class="relative group">
+                    <div class="absolute -inset-1 bg-pink-500 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-200"></div>
+                    <button id="btnSi" 
+                            class="relative bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold py-4 px-10 rounded-full 
+                                   transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                        ¡Sí, por supuesto! 💝
+                    </button>
+                </div>
+                
+                <div class="relative group">
+                    <div class="absolute -inset-1 bg-gray-300 rounded-full blur opacity-50 group-hover:opacity-75 transition duration-200"></div>
+                    <button id="btnNo" 
+                            class="relative bg-white/90 hover:bg-gray-100 text-gray-800 font-bold py-3 px-8 rounded-full 
+                                   transition-all duration-300 border-2 border-gray-200 hover:border-gray-300">
+                        No, lo siento 😢
+                    </button>
+                </div>
+                
+                <div class="mt-6 text-sm text-gray-500">
+                    <p>P.D.: El botón 'No' es solo decoración 😉</p>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Crear corazones flotantes
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            const emojis = ['💖', '💝', '💘', '💗', '💓', '💞', '💕'];
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart-emoji';
+                heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = Math.random() * 3 + 5 + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                
+                heartsContainer.appendChild(heart);
+                
+                // Eliminar el corazón después de la animación
+                setTimeout(() => {
+                    heart.remove();
+                }, 8000);
+            }, 300);
+        }
+        
+        // Iniciar la lluvia de corazones
+        createHearts();
+        
+        // Manejar el botón Sí
+        const btnSi = document.getElementById('btnSi');
+        const btnNo = document.getElementById('btnNo');
+        
+        btnSi.addEventListener('click', () => {
+            // Guardar la respuesta en localStorage
+            localStorage.setItem('sanValentin', 'aceptado');
+            // Redirigir a la página de agradecimiento
+            window.location.href = 'gracias.html';
+        });
+
+        // Hacer que el botón No sea difícil de hacer clic
+        btnNo.addEventListener('mouseover', () => {
+            const x = Math.random() * (window.innerWidth - btnNo.offsetWidth * 2);
+            const y = Math.random() * (window.innerHeight - btnNo.offsetHeight * 2);
+            
+            btnNo.style.position = 'fixed';
+            btnNo.style.left = `${Math.max(20, x)}px`;
+            btnNo.style.top = `${Math.max(20, y)}px`;
+            
+            // Cambiar el texto del botón No
+            const frases = ['¡Segura?', '¿En serio?', '¡Piénsalo bien!', '¡Por favor!', '¡Te quiero!', '🥺'];
+            btnNo.textContent = frases[Math.floor(Math.random() * frases.length)];
+        });
+        
+        // Efecto de confeti al cargar la página
+        function createConfetti() {
+            const colors = ['#ff0000', '#ff69b4', '#ff1493', '#ffc0cb', '#ff69b4'];
+            const container = document.createElement('div');
+            container.style.position = 'fixed';
+            container.style.top = '0';
+            container.style.left = '0';
+            container.style.width = '100%';
+            container.style.height = '100%';
+            container.style.pointerEvents = 'none';
+            container.style.zIndex = '1000';
+            
+            document.body.appendChild(container);
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'absolute';
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = -20 + 'px';
+                confetti.style.opacity = Math.random();
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                confetti.style.animation = `fall ${Math.random() * 3 + 2}s linear ${Math.random() * 5}s forwards`;
+                
+                container.appendChild(confetti);
+                
+                // Eliminar después de la animación
+                setTimeout(() => {
+                    confetti.remove();
+                }, 10000);
+            }
+            
+            setTimeout(() => {
+                container.remove();
+            }, 10000);
+        }
+        
+        // Lanzar confeti al cargar la página
+        window.addEventListener('load', () => {
+            createConfetti();
+            // Repetir el confeti cada 3 segundos
+            setInterval(createConfetti, 5000);
+        });
+    </script>
+</body>
+</html>
